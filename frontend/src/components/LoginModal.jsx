@@ -25,7 +25,10 @@ const navigate = useNavigate();
 
     const { data } = await loginUser({ email, password });
 
-    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("user", JSON.stringify({
+  ...data.user,
+  token: data.user.token
+}));
 
     toast.dismiss();
     toast.success("Login successful!");
