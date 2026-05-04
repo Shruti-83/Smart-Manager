@@ -20,8 +20,12 @@ const app = express(); // ✅ FIRST create app
 
 // ✅ middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URI,
-  credentials: true,
+  origin: [
+    "http://localhost:5173",
+    "https://smart-manager-u9ye.vercel.app",
+    "https://smart-manager-u9ye-ocbahy3ji-shrutis-projects-05b75c37.vercel.app"
+  ],
+  credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser());
@@ -42,9 +46,14 @@ const server = http.createServer(app);
 // ✅ SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URI,
-    credentials: true,
-  },
+    origin: [
+      "http://localhost:5173",
+      "https://smart-manager-u9ye.vercel.app",
+      "https://smart-manager-u9ye-ocbahy3ji-shrutis-projects-05b75c37.vercel.app"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
 app.set("io", io);
 // ✅ SOCKET EVENTS
