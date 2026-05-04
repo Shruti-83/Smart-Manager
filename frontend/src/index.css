@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+themes: business
+};
+
+@layer base{
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+           cursor: pointer;
+    }
+}
+/* in index.css */
+.perspective {
+  perspective: 1000px;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.dot {
+  width: 4px;
+  height: 4px;
+  background: gray;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1.4s infinite both;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; transform: translateY(0); }
+  20% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 0.2; transform: translateY(0); }
+}
+@keyframes spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.reverse {
+  animation: spin-reverse 1.5s linear infinite;
+}
+:root {
+  --bg-primary:     #0a0a0f;
+  --bg-secondary:   #12121a;
+  --bg-panel:       rgba(255,255,255,0.06);
+  --bg-card:        rgba(255,255,255,0.04);
+  --border:         rgba(255,255,255,0.1);
+  --text-primary:   #f0f0f5;
+  --text-secondary: rgba(240,240,245,0.5);
+  --accent:         #7c6ff7;
+  --accent-glow:    rgba(124,111,247,0.25);
+  --nav-active:     rgba(124,111,247,0.15);
+  --nav-hover:      rgba(255,255,255,0.06);
+  --sidebar-blur:   blur(20px);
+}
+ 
+/* Apply bg to the app root so theme backgrounds work */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.4s ease, color 0.4s ease;
+}
