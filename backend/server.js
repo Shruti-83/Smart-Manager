@@ -20,11 +20,7 @@ const app = express(); // ✅ FIRST create app
 
 // ✅ middleware
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://smart-manager-u9ye.vercel.app",
-    "https://smart-manager-u9ye-ocbahy3ji-shrutis-projects-05b75c37.vercel.app"
-  ],
+  origin: true,
   credentials: true
 }));
 app.use(express.json());
@@ -46,11 +42,7 @@ const server = http.createServer(app);
 // ✅ SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:5173",
-      "https://smart-manager-u9ye.vercel.app",
-      "https://smart-manager-u9ye-ocbahy3ji-shrutis-projects-05b75c37.vercel.app"
-    ],
+    origin: true,
     methods: ["GET", "POST"],
     credentials: true
   }
