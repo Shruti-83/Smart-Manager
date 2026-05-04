@@ -9,7 +9,7 @@ import { logTask } from "../API/Task.js";
 import { getUsers } from "../API/Auth.js";
 import ChatPage from "../components/ChatPage.jsx";
 import AnalyticsPage from "../components/AnalyticsPage.jsx";
-import AnimatedBackground from "../components/AnimatedBackGround.jsx";
+import AnimatedBackground from "../components/AnimatedBackground.jsx";
 import GamesPage from "../components/GamesPage.jsx";
 
 function AdminDashboard({ panelOpen, setPanelOpen }) {
