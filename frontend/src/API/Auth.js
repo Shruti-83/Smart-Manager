@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL:  `${import.meta.env.VITE_BACKEND_URI}/api/auth`,
-  withCredentials: true, // 🔥 REQUIRED for cookies
+  withCredentials: false, // 🔥 REQUIRED for cookies
 });
 
 export const loginUser = (data) => API.post("/login", data);
