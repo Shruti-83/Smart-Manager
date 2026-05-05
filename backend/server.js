@@ -16,11 +16,17 @@ import Message from "./models/Chat.js"; // ✅ Updated import
 dotenv.config();
 connectDB();
 
+const allowedOrigins = [
+  "https://smart-manager-five.vercel.app",
+  "https://smart-manager-7bx6bvalo-shrutis-projects-05b75c37.vercel.app",
+  /\.vercel\.app$/   // ← allows ALL your vercel preview URLs
+];
+
 const app = express(); // ✅ FIRST create app
 
 // ✅ middleware
 app.use(cors({
-  origin: ["https://smart-manager-five.vercel.app"],
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());
@@ -42,7 +48,7 @@ const server = http.createServer(app);
 // ✅ SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: ["https://smart-manager-five.vercel.app"],
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true
   }
