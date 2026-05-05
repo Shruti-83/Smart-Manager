@@ -6,8 +6,8 @@ A full-stack MERN application designed to manage tasks efficiently with real-tim
 
 ## 🌐 Live Demo
 
-* Frontend: https://your-frontend-link.vercel.app
-* Backend API: https://your-backend-link.onrender.com
+* Frontend: [https://your-frontend-link.vercel.app](https://smart-manager-git-main-shrutis-projects-05b75c37.vercel.app/)
+* Backend API: [https://your-backend-link.onrender.com](https://smart-manager-9irb.onrender.com)
 
 ---
 
