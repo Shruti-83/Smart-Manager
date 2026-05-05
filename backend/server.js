@@ -20,7 +20,7 @@ const app = express(); // ✅ FIRST create app
 
 // ✅ middleware
 app.use(cors({
-  origin: true,
+  origin: ["https://smart-manager-five.vercel.app"],
   credentials: true
 }));
 app.use(express.json());
@@ -42,7 +42,7 @@ const server = http.createServer(app);
 // ✅ SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: true,
+    origin: ["https://smart-manager-five.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true
   }
