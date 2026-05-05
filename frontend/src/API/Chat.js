@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL:  `${import.meta.env.VITE_BACKEND_URI}/api/chat`,
-  withCredentials: false, // 🔥 REQUIRED for cookies
+  withCredentials: true, // 🔥 REQUIRED for cookies
 });
 
 // auto-attach token if present

@@ -25,15 +25,12 @@ const navigate = useNavigate();
 
     const { data } = await loginUser({ email, password });
 
-    localStorage.setItem("user", JSON.stringify({
-  ...data.user,
-  token: data.user.token
-}));
+    localStorage.setItem("user", JSON.stringify(data)); // data already has token at top level
 
     toast.dismiss();
     toast.success("Login successful!");
 
-    onLoginSuccess(data.user); // 🔥 pass user
+    onLoginSuccess(data); // ✅// 🔥 pass user
     onClose();
 
   } catch (err) {
