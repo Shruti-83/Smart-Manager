@@ -82,21 +82,38 @@ function TaskCreateModal({ users, onClose, onTaskCreated }) {
     gsap.to(cardRef.current, { rotateY: 0, rotateX: 0, duration: 0.6, ease: "elastic.out(1,0.5)" });
   };
 
-  // ── step transition ──────────────────────────────────────
-  const goToStep = (next) => {
-    const dir     = next > step ? 1 : -1;
-    const current = stepRefs.current[step];
-    const target  = stepRefs.current[next];
-    gsap.to(current, { x: -dir * 40, opacity: 0, duration: 0.2, ease: "power2.in",
-      onComplete: () => {
-        setStep(next);
-        gsap.fromTo(target,
-          { x: dir * 40, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.25, ease: "power2.out" });
-      }
-    });
-  };
+ // Add this validation function
+const validateStep = () => {
+  if (step === 0) {
+    const title = document.querySelector('input[name="title"]').value;
+    const desc = document.querySelector('textarea[name="description"]').value;
+    if (!title.trim()) { toast.error("Please enter a task title"); return false; }
+    if (!desc.trim()) { toast.error("Please enter a description"); return false; }
+  }
+  if (step === 1) {
+    const assignedTo = document.querySelector('select[name="assignedTo"]').value;
+    const deadline = document.querySelector('input[name="deadline"]').value;
+    if (!assignedTo) { toast.error("Please assign to a team member"); return false; }
+    if (!deadline) { toast.error("Please select a deadline"); return false; }
+  }
+  return true;
+};
 
+// Update goToStep to validate before advancing
+const goToStep = (next) => {
+  if (next > step && !validateStep()) return; // ← block if invalid
+  const dir     = next > step ? 1 : -1;
+  const current = stepRefs.current[step];
+  const target  = stepRefs.current[next];
+  gsap.to(current, { x: -dir * 40, opacity: 0, duration: 0.2, ease: "power2.in",
+    onComplete: () => {
+      setStep(next);
+      gsap.fromTo(target,
+        { x: dir * 40, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.25, ease: "power2.out" });
+    }
+  });
+};
   // ── particle burst ───────────────────────────────────────
   const burst = (e, color) => {
     const rect = e.currentTarget?.getBoundingClientRect?.() ||
@@ -240,7 +257,7 @@ function TaskCreateModal({ users, onClose, onTaskCreated }) {
               <input
                 name="title"
                 placeholder="Task title"
-                required
+                
                 style={inputStyle}
                 onFocus={e => {
                   e.target.style.borderColor = "var(--border-focus)";
@@ -255,7 +272,7 @@ function TaskCreateModal({ users, onClose, onTaskCreated }) {
                 name="description"
                 placeholder="Describe the task..."
                 rows={3}
-                required
+                
                 style={{ ...inputStyle, resize: "none" }}
                 onFocus={e => {
                   e.target.style.borderColor = "var(--border-focus)";
@@ -308,7 +325,7 @@ function TaskCreateModal({ users, onClose, onTaskCreated }) {
                 </p>
                 <select
                   name="assignedTo"
-                  required
+                  
                   style={{ ...inputStyle, cursor: "pointer", colorScheme: "dark" }}
                   onFocus={e => {
                     e.target.style.borderColor = "var(--border-focus)";
@@ -335,7 +352,7 @@ function TaskCreateModal({ users, onClose, onTaskCreated }) {
                 <input
                   type="date"
                   name="deadline"
-                  required
+                  
                   min={today}
                   style={{ ...inputStyle, colorScheme: "dark" }}
                   onFocus={e => {
