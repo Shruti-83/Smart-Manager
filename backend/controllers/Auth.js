@@ -159,11 +159,8 @@ export const sendOtpController = async (req, res) => {
 
 
   } catch (err) {
-    console.error("SEND OTP ERROR:", err);
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
+    console.error("SEND OTP ERROR:", err.message); // ← you'll now see the real error in Render logs
+    res.status(500).json({ success: false, message: err.message }); 
   }
 };
 
