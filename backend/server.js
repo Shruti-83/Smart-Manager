@@ -20,7 +20,7 @@ const app = express(); // ✅ FIRST create app
 
 // ✅ middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [process.env.FRONTEND_URL, 'http://localhost:5174'],  // allow both frontend ports
   credentials: true   // keep this if you're using cookies
 }))
 app.use(express.json());
