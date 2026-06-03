@@ -18,6 +18,13 @@ connectDB();
 
 const app = express(); // ✅ FIRST create app
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://smart-manager-beige.vercel.app'
+];
+
+
 // ✅ middleware
 const corsOptions = {
   origin: function (origin, callback) {
