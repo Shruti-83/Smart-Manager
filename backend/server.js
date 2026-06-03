@@ -18,18 +18,17 @@ connectDB();
 
 const app = express(); // ✅ FIRST create app
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'https://smart-manager-beige.vercel.app'
-];
 
 
 // ✅ middleware
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log("Request from origin:", origin); // check logs
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (
+      !origin ||
+      origin.endsWith('.vercel.app') ||
+      origin === 'http://localhost:5173' ||
+      origin === 'http://localhost:5174'
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -60,7 +59,12 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        origin.endsWith('.vercel.app') ||
+        origin === 'http://localhost:5173' ||
+        origin === 'http://localhost:5174'
+      ) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
