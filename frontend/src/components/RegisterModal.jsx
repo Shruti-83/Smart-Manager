@@ -47,10 +47,10 @@ const handleRegister = async () => {
   }
   try {
     const { data } = await registerUser({ firstName, lastName, email, password, confirmPassword });
-    localStorage.setItem("user", JSON.stringify(data.user));
-    toast.success("Registered successfully!");
-    navigate("/dashboard");
-    onClose();
+   localStorage.setItem("user", JSON.stringify({ ...data.user, token: data.token }));
+toast.success("Registered successfully!");
+navigate("/dashboard");
+onClose();
   } catch (err) {
     // ✅ was: toast.error(err) — that just prints "[object Object]" and doesn't throw
     toast.error(err.response?.data?.message || "Registration failed");

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_URI}/api/tasks`,
+  withCredentials: true, // ← sends the httpOnly cookie automatically
 });
 
 API.interceptors.request.use((config) => {

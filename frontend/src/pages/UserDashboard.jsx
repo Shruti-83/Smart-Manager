@@ -17,7 +17,21 @@ function UserDashboard({ panelOpen, setPanelOpen }) {
 
   const timerRef = useRef(null);
   const user = JSON.parse(localStorage.getItem("user"));
-
+const fetchTasks = async () => {
+  try {
+    // Debug: see exactly what's stored
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    console.log("=== DEBUG ===");
+    console.log("Full user object:", user);
+    console.log("Token:", user?.token);
+    console.log("All cookies:", document.cookie);
+    
+    const res = await logTask();
+    setTasks(res.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
   // ── sidebar auto-hide ────────────────────────────────────
   const startTimer = () => {
     if (timerRef.current) clearTimeout(timerRef.current);

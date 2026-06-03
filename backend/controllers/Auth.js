@@ -34,9 +34,14 @@ export const registerUser = async (req, res) => {
     // ✅ 4. Check if user already exists
     let user = await User.findOne({ email });
 
+   if(user && user.password) {
+      return res.status(400).json({
+        message: "User already exists, please login"
+      });
+    }
 
     // ❗ IMPORTANT: Check OTP verification
-    if (!user || !user.isVerified) {
+    if ( !user.isVerified) {
       return res.status(400).json({
         message: "Please verify your email first"
       });
@@ -66,15 +71,17 @@ sameSite: "None",
 });
 
 
-    res.status(201).json({
-      message: "User registered successfully",
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email
-      }
-    });
+   res.status(201).json({
+  message: "User registered successfully",
+  token,          // ← add this
+  user: {
+    id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    role: user.role
+  }
+});
   }
   catch (error) {
     res.status(500).json({
@@ -216,8 +223,8 @@ export const loginUser = async (req, res) => {
     // 🍪 send cookie
    res.cookie("token", token, {
   httpOnly: true,
- secure: true,
-sameSite: "None",
+   secure: true,       // ← must match login
+    sameSite: "None", 
   maxAge: 7 * 24 * 60 * 60 * 1000
 });
 
@@ -237,12 +244,11 @@ sameSite: "None",
 
 export const logoutUser = (req, res) => {
   res.cookie("token", "", {
-       httpOnly: true,
-  secure: false,
-  sameSite: "Lax",   // ✅ SAME AS LOGIN
-  expires: new Date(0),
+    httpOnly: true,
+    secure: true,       // ← must match login
+    sameSite: "None",   // ← must match login
+    expires: new Date(0),
   });
-
   res.json({ message: "Logged out successfully" });
 };
 
