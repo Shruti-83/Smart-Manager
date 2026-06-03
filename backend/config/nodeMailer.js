@@ -1,10 +1,9 @@
-import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
-import dns from "dns";
-
-dns.setDefaultResultOrder("ipv4first"); // ← forces IPv4 for all DNS lookups
+import { Resend } from "resend";
 
 export const sendOTP = async (email) => {
+  const resend = new Resend(process.env.RESEND_API_KEY); // ← inside function
+
   const otp = otpGenerator.generate(6, {
     digits: true,
     upperCaseAlphabets: false,
@@ -12,18 +11,8 @@ export const sendOTP = async (email) => {
     specialChars: false
   });
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",   // ← use explicit host instead of service:"gmail"
-    port: 587,                 // ← 587 (TLS) instead of 465 (SSL)
-    secure: false,             // ← false for port 587
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
     to: email,
     subject: "Your OTP",
     text: `Your OTP is: ${otp}\n\nValid for 5 minutes. Do not share it.`
