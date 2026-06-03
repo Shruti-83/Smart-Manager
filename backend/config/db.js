@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 let isConnected = false; // ✅ track connection
 
-const connectDB = async () => {
+export const connectDB = async () => {
   if (isConnected) return; // reuse existing connection
   
   const db = await mongoose.connect(process.env.MONGO_URI);
@@ -10,4 +10,3 @@ const connectDB = async () => {
   console.log('DB connected');
 };
 
-module.exports = connectDB;
