@@ -48,6 +48,10 @@ app.use("/api/tasks", TaskRoutes);
 app.use("/api/chat", ChatRoutes);
 app.use("/uploads", express.static("uploads"));
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.get("/", (req, res) => {
   res.send("API is running");
 });
