@@ -1,4 +1,4 @@
-# 🚀 Project Name (e.g., Smart Task Manager)
+# Smart Task Manager
 
 A full-stack MERN application designed to manage tasks efficiently with real-time updates, authentication, and role-based dashboards.
 
@@ -6,8 +6,7 @@ A full-stack MERN application designed to manage tasks efficiently with real-tim
 
 ## 🌐 Live Demo
 
-* Frontend: [https://your-frontend-link.vercel.app](https://smart-manager-git-main-shrutis-projects-05b75c37.vercel.app/)
-* Backend API: [https://your-backend-link.onrender.com](https://smart-manager-9irb.onrender.com)
+https://smart-manager-beige.vercel.app/
 
 ---
 
@@ -38,7 +37,8 @@ A full-stack MERN application designed to manage tasks efficiently with real-tim
 * React Router
 
 ### Backend
-
+* Cookies
+* Resend
 * Node.js
 * Express.js
 * MongoDB
@@ -96,12 +96,13 @@ MONGO_URI=your_mongodb_url
 JWT_SECRET=your_secret
 EMAIL_USER=your_email
 EMAIL_PASS=your_password
+RESEND_API_KEY=API_KEY
 ```
 
 ### frontend/.env
 
 ```
-VITE_API_URL=http://localhost:5173
+VITE_BACKEND_URL=http://localhost:5173
 ```
 
 ---
