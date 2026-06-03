@@ -160,7 +160,7 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log("CLIENT_URL:", process.env.FRONTEND_URI);
+
 // ❗ IMPORTANT: use server.listen NOT app.listen
 server.listen(process.env.PORT, () => {
   console.log("Server running on PORT " + process.env.PORT);
