@@ -34,18 +34,26 @@ export const registerUser = async (req, res) => {
     // ✅ 4. Check if user already exists
     let user = await User.findOne({ email });
 
-   if(user && user.password) {
-      return res.status(400).json({
-        message: "User already exists, please login"
-      });
-    }
+  // Case 1: Fully registered user
+if (user && user.password) {
+  return res.status(400).json({
+    message: "User already exists, please login"
+  });
+}
 
-    // ❗ IMPORTANT: Check OTP verification
-    if ( !user.isVerified) {
-      return res.status(400).json({
-        message: "Please verify your email first"
-      });
-    }
+// Case 2: Never requested OTP (no user record at all)
+if (!user) {
+  return res.status(400).json({
+    message: "Please request and verify OTP first"
+  });
+}
+
+// Case 3: OTP requested but not verified yet
+if (!user.isVerified) {
+  return res.status(400).json({
+    message: "Please verify your email first"
+  });
+}
 
     // ✅ 5. Hash password
     const salt = await bcrypt.genSalt(10);
