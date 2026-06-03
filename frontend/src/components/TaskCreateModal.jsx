@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { createTask } from "../API/Task.js";
 import gsap from "gsap";
 import { useTheme } from "../context/ThemeContext";
+import toast from "react-hot-toast";
 
 const STEPS = ["basics", "assign", "files"];
 
