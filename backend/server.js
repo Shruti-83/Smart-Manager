@@ -19,10 +19,20 @@ connectDB();
 const app = express(); // ✅ FIRST create app
 
 // ✅ middleware
-app.use(cors({
-  origin: [process.env.FRONTEND_URI, 'http://localhost:5174'],  // allow both frontend ports
-  credentials: true   // keep this if you're using cookies
-}))
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("Request from origin:", origin); // check logs
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -42,7 +52,13 @@ const server = http.createServer(app);
 // ✅ SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: [process.env.FRONTEND_URI, 'http://localhost:5173', 'http://localhost:5174'],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST"],
     credentials: true
   }
